@@ -14,6 +14,129 @@ const ProposalView = () => {
   const rejectButtonRef = useRef(null)
   const pageRef = useRef(null)
 
+  // Array of 100+ random lovely rejection messages
+  const rejectMessages = [
+    "Oops! The button jumped away! Try again! 🥺",
+    "It moved again! This button has trust issues! 💕",
+    "The button is playing hard to get! 😉",
+    "Almost got it! One more try? 💖",
+    "Aww, the button is shy! Maybe it wants you to say YES instead? 💝",
+    "Whoosh! Did you see that? The button has superpowers! ✨",
+    "The button is doing cardio! It's getting its steps in! 🏃‍♂️",
+    "Peek-a-boo! The button is playing hide and seek! 👀",
+    "The button believes in true love and won't let you say no! 💘",
+    "Oopsie daisy! The button slipped away like butter! 🧈",
+    "The button is practicing its dance moves! 💃",
+    "Nope! The button said 'not today!' 😄",
+    "The button is allergic to rejection! Achoo! 🤧",
+    "Zoom zoom! The button has places to be! 🚗",
+    "The button is on a mission to spread love! 💌",
+    "Catch me if you can! - The Button 🏃‍♀️",
+    "The button thinks you're too good for rejection! 🌟",
+    "Whoops! The button has commitment issues too! 😅",
+    "The button is team YES all the way! 📣",
+    "Boing! The button is made of rubber apparently! 🏀",
+    "The button escaped to Loveland! 🏰",
+    "Surprise! The button is a magician! 🎩",
+    "The button is protesting against negativity! ✊",
+    "Beep beep! The button is in reverse! 🚙",
+    "The button joined the witness protection program! 🕵️",
+    "Plot twist! The button is actually cupid in disguise! 💘",
+    "The button is doing the cha-cha! 💃",
+    "Abracadabra! The button vanished! ✨",
+    "The button is speed dating with your cursor! 💨",
+    "The button thinks rejection is so last season! 👗",
+    "Whoosh! The button is faster than your WiFi! 📶",
+    "The button is training for the Olympics! 🏅",
+    "The button has trust issues after being clicked so much! 😢",
+    "Surprise! The button is actually a butterfly! 🦋",
+    "The button is social distancing from negativity! 😷",
+    "Zoom! The button is late for a love meeting! 💕",
+    "The button thinks you deserve better than 'no'! 👑",
+    "Poof! The button disappeared into thin air! 💨",
+    "The button is doing yoga - downward facing dodge! 🧘‍♀️",
+    "The button is allergic to broken hearts! 💔",
+    "Wheee! The button is on a roller coaster! 🎢",
+    "The button is playing musical chairs! 🪑",
+    "The button thinks love should win! 🏆",
+    "Boop! The button booped away! 👆",
+    "The button is doing the moonwalk! 🌙",
+    "The button joined a flash mob! 🕺",
+    "Surprise! The button is camera shy! 📸",
+    "The button is practicing social distancing! 📏",
+    "Whoosh! The button is wind-powered! 🌪️",
+    "The button thinks you're too cute to reject anyone! 🥰",
+    "Zoom! The button is late for cupid training! 🏹",
+    "The button is doing parkour! 🤸‍♂️",
+    "Poof! The button went to get backup from cupid! 👼",
+    "The button is allergic to the word 'no'! 🤧",
+    "Surprise! The button is actually made of love! 💖",
+    "The button thinks rejection is overrated! 📉",
+    "Whoosh! The button is powered by romance! 🌹",
+    "The button is doing the tango with your heart! 💃",
+    "Boing! The button bounced to cloud nine! ☁️",
+    "The button is on a quest to find true love! ⚔️",
+    "Zoom! The button is faster than cupid's arrow! 🏹",
+    "The button thinks you're too sweet for bitter words! 🍯",
+    "Poof! The button vanished like morning mist! 🌫️",
+    "The button is doing interpretive dance! 💃",
+    "Whoosh! The button is surfing on love waves! 🏄‍♂️",
+    "The button joined the love revolution! ✊",
+    "Surprise! The button is actually a love potion! 🧪",
+    "The button thinks negativity is so yesterday! 📅",
+    "Zoom! The button is chasing rainbows! 🌈",
+    "The button is doing the electric slide! ⚡",
+    "Poof! The button teleported to romance land! 🏰",
+    "The button thinks you deserve a fairy tale! 📚",
+    "Whoosh! The button is powered by butterfly kisses! 🦋",
+    "The button is allergic to sad endings! 😭",
+    "Boing! The button bounced to the moon! 🌙",
+    "The button thinks love is the only answer! 💝",
+    "Zoom! The button is racing towards happiness! 🏁",
+    "The button is doing the salsa! 💃",
+    "Poof! The button went to consult the love guru! 🧙‍♂️",
+    "The button thinks you're too magical for rejection! ✨",
+    "Whoosh! The button is riding a unicorn! 🦄",
+    "The button joined the happiness committee! 😊",
+    "Surprise! The button is actually cupid's sidekick! 👼",
+    "The button thinks love conquers all! 👑",
+    "Zoom! The button is late for a romance novel! 📖",
+    "The button is doing the twist! 🌪️",
+    "Poof! The button vanished into a love song! 🎵",
+    "The button thinks you're too precious for 'no'! 💎",
+    "Whoosh! The button is powered by starlight! ⭐",
+    "The button is allergic to broken dreams! 💭",
+    "Boing! The button bounced to paradise! 🏝️",
+    "The button thinks every story should have a happy ending! 📚",
+    "Zoom! The button is chasing shooting stars! 🌠",
+    "The button is doing the robot dance! 🤖",
+    "Poof! The button went to get love advice! 💌",
+    "The button thinks you're too wonderful for rejection! 🌟",
+    "Whoosh! The button is surfing on cloud nine! ☁️",
+    "The button joined the smile patrol! 😄",
+    "Surprise! The button is actually made of sunshine! ☀️",
+    "The button thinks love is always the answer! 💕",
+    "Zoom! The button is racing to happily ever after! 🏰",
+    "The button is doing the floss dance! 🦷",
+    "Poof! The button teleported to dreamland! 💭",
+    "The button thinks you deserve all the love! 💖",
+    "Whoosh! The button is powered by good vibes! ✨",
+    "The button is allergic to heartbreak! 💔",
+    "Boing! The button bounced to the stars! ⭐",
+    "The button thinks romance is in the air! 🌸",
+    "Zoom! The button is late for a love festival! 🎪",
+    "The button is doing the macarena! 💃",
+    "Poof! The button went to spread more love! 💝"
+  ]
+
+  const finalMessages = [
+    "Okay fine, you can click it now... but that YES button is still glowing! ✨",
+    "Alright, alright! You win! But look how sad the YES button looks! 😢",
+    "You're persistent! But are you sure you want to break a heart? 💔",
+    "Fine, you caught me! But the YES button is still hoping! 🤞",
+    "You got me! But remember, love always finds a way! 💕"
+  ]
+
   useEffect(() => {
     // Mock loading proposal data
     const mockData = {
@@ -67,7 +190,7 @@ const ProposalView = () => {
   }
 
   const handleRejectHover = () => {
-    if (rejectAttempts < 5) {
+    if (rejectAttempts < 100) {
       moveRejectButton()
     }
   }
@@ -75,12 +198,12 @@ const ProposalView = () => {
   const handleRejectClick = (e) => {
     e.preventDefault()
     
-    if (rejectAttempts < 5) {
-      // Move the button instead of actually rejecting
+    if (rejectAttempts < 100) {
+      // Move the button for the first 100 attempts
       moveRejectButton()
     } else {
-      // After 5 attempts, show a cute message and allow clicking
-      alert("Okay, okay! I get the hint... but that YES button is still there waiting! 💖")
+      // After 100 attempts, show a cute message and allow clicking
+      alert("Wow! You're really determined! 💪 But that YES button is still there, just saying... 💖")
       setResponse('no')
     }
   }
@@ -90,8 +213,16 @@ const ProposalView = () => {
     setShowCelebration(true)
   }
 
-  const handleReject = () => {
-    // This function is no longer used, replaced by handleRejectClick
+  const getRejectMessage = () => {
+    if (rejectAttempts >= 100) {
+      // After 100 attempts, show final messages
+      const finalIndex = Math.min(Math.floor((rejectAttempts - 100) / 10), finalMessages.length - 1)
+      return finalMessages[finalIndex]
+    } else {
+      // Show random message from the array
+      const messageIndex = (rejectAttempts - 1) % rejectMessages.length
+      return rejectMessages[messageIndex]
+    }
   }
 
   if (!proposalData) {
@@ -254,7 +385,7 @@ const ProposalView = () => {
                   }}
                 >
                   <X size={20} />
-                  {rejectAttempts >= 10000 ? 'Fine, No!' : 'No'}
+                  {rejectAttempts >= 100 ? 'Fine, No!' : 'No'}
                 </motion.button>
               </motion.div>
 
@@ -265,9 +396,9 @@ const ProposalView = () => {
                   animate={{ opacity: 1 }}
                 >
                   <p>
-                    {rejectAttempts === 1 && "Oops! The button jumped away! Try again! 🥺"}
-                    {rejectAttempts === 2 && "It moved again! This button has trust issues! 💕"}
-                    {rejectAttempts === 3 && "The button is playing hard to get! 😉"}
+                    {getRejectMessage()}
+
+
                     {rejectAttempts === 4 && "It's trying to escape! Maybe give love a chance? �"}
                     {rejectAttempts >= 5 && "Okay, you can click it now... but that YES button is still glowing! ✨"}
                   </p>
