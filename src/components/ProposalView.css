@@ -409,3 +409,38 @@
     z-index: 9999 !important;
   }
 }
+.proposal-error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+}
+
+.error-content {
+  background: white;
+  padding: 40px;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(255, 107, 157, 0.3);
+  max-width: 400px;
+  width: 90%;
+}
+
+.error-content h2 {
+  color: var(--text-dark);
+  margin-bottom: 15px;
+  font-size: 1.8rem;
+}
+
+.error-content p {
+  color: #666;
+  margin-bottom: 25px;
+  font-size: 1.1rem;
+}
+
+.error-content .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}

@@ -1,7 +1,9 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { CreditCard, Shield, ArrowLeft, Check, Heart, Copy, Share2, X } from 'lucide-react'
+import { CreditCard, Shield, ArrowLeft, Check, Heart, Copy, Share2, X, Smartphone, Building2, Wallet, TrendingUp } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
+import apiService from '../services/api'
+import razorpayService from '../services/razorpay'
 import './PaymentPage.css'
 
 const PaymentPage = () => {
@@ -11,6 +13,27 @@ const PaymentPage = () => {
   const [showSuccessModal, setShowSuccessModal] = useState(false)
   const [magicLink, setMagicLink] = useState('')
   const [copied, setCopied] = useState(false)
+  const [proposalData, setProposalData] = useState(null)
+  const [error, setError] = useState('')
+  const [accessToken, setAccessToken] = useState('')
+  const [paymentMethods, setPaymentMethods] = useState([])
+  const [selectedMethod, setSelectedMethod] = useState('')
+
+  useEffect(() => {
+    // Get proposal data from localStorage
+    const storedData = localStorage.getItem('proposalData')
+    if (storedData) {
+      setProposalData(JSON.parse(storedData))
+    } else {
+      // Redirect to create page if no proposal data
+      navigate('/create')
+    }
+
+    // Load Razorpay payment methods
+    const methods = razorpayService.getPaymentMethods()
+    setPaymentMethods(methods)
+    setSelectedMethod(methods[0]?.id || 'card')
+  }, [])
 
   const copyToClipboard = async () => {
     try {
@@ -48,22 +71,84 @@ const PaymentPage = () => {
 
   const handlePayment = async (e) => {
     e.preventDefault()
-    setIsProcessing(true)
+    if (!proposalData) return
     
-    // Mock payment processing
-    setTimeout(() => {
-      // Generate mock magic link
-      const proposalId = Date.now().toString()
-      const generatedLink = `${window.location.origin}/proposal/${proposalId}`
+    setIsProcessing(true)
+    setError('')
+    
+    try {
+      // Create Razorpay order using the correct API endpoint
+      const orderData = await apiService.createRazorpayOrder(
+        proposalData.proposal_id, 
+        29.00 // Amount in INR - corrected to ₹29
+      )
       
-      // Store the magic link
-      localStorage.setItem('magicLink', generatedLink)
-      localStorage.setItem('proposalId', proposalId)
+      // Prepare payment data for Razorpay using API response format
+      const paymentData = {
+        // Data from API response
+        key_id: orderData.key_id,
+        amount: orderData.amount, // Already in paise from API
+        currency: orderData.currency,
+        order_id: orderData.order_id,
+        
+        // Additional data for checkout
+        proposal_id: proposalData.proposal_id,
+        customerName: proposalData.fromName,
+        customerEmail: proposalData.email,
+        from_name: proposalData.fromName,
+        to_name: proposalData.toName,
+        
+        onSuccess: async (razorpayResponse) => {
+          try {
+            // Verify payment using the correct API endpoint
+            const verificationData = {
+              razorpay_order_id: razorpayResponse.razorpay_order_id,
+              razorpay_payment_id: razorpayResponse.razorpay_payment_id,
+              razorpay_signature: razorpayResponse.razorpay_signature
+            }
+            
+            const verificationResult = await apiService.verifyRazorpayPayment(verificationData)
+            
+            if (verificationResult.success) {
+              // Generate magic link from proposal data
+              const generatedLink = `${window.location.origin}/proposal/view/${verificationResult.access_token}`
+              
+              setMagicLink(generatedLink)
+              setAccessToken(verificationResult.access_token)
+              setShowSuccessModal(true)
+              
+              // Store access token for later use
+              localStorage.setItem('accessToken', verificationResult.access_token)
+            } else {
+              throw new Error('Payment verification failed')
+            }
+          } catch (verifyError) {
+            console.error('Payment verification error:', verifyError)
+            setError('Payment completed but verification failed. Please contact support.')
+          } finally {
+            setIsProcessing(false)
+          }
+        },
+        onFailure: (errorData) => {
+          console.error('Payment failed:', errorData)
+          setError(`Payment failed: ${errorData.description || 'Unknown error'}`)
+          setIsProcessing(false)
+        },
+        onCancel: (message) => {
+          console.log('Payment cancelled:', message)
+          setError('Payment was cancelled')
+          setIsProcessing(false)
+        }
+      }
       
-      setMagicLink(generatedLink)
+      // Process payment with Razorpay
+      await razorpayService.processPayment(paymentData)
+      
+    } catch (error) {
+      console.error('Payment error:', error)
+      setError(error.message || 'Payment failed. Please try again.')
       setIsProcessing(false)
-      setShowSuccessModal(true)
-    }, 3000)
+    }
   }
 
   return (
@@ -158,8 +243,7 @@ const PaymentPage = () => {
                 <motion.button
                   className="btn btn-primary"
                   onClick={() => {
-                    const proposalId = localStorage.getItem('proposalId')
-                    navigate(`/proposal/${proposalId}`)
+                    navigate(`/proposal/view/${accessToken}`)
                   }}
                   whileHover={{ scale: 1.02 }}
                 >
@@ -235,93 +319,65 @@ const PaymentPage = () => {
             <div className="payment-methods">
               <h3>Choose Payment Method</h3>
               <div className="method-options">
-                <label className={`method-option ${paymentMethod === 'card' ? 'active' : ''}`}>
-                  <input
-                    type="radio"
-                    name="paymentMethod"
-                    value="card"
-                    checked={paymentMethod === 'card'}
-                    onChange={(e) => setPaymentMethod(e.target.value)}
-                  />
-                  <CreditCard size={20} />
-                  <span>Credit/Debit Card</span>
-                </label>
-                
-                <label className={`method-option ${paymentMethod === 'upi' ? 'active' : ''}`}>
-                  <input
-                    type="radio"
-                    name="paymentMethod"
-                    value="upi"
-                    checked={paymentMethod === 'upi'}
-                    onChange={(e) => setPaymentMethod(e.target.value)}
-                  />
-                  <span className="upi-icon">📱</span>
-                  <span>UPI</span>
-                </label>
+                {paymentMethods.map((method) => (
+                  <label 
+                    key={method.id}
+                    className={`method-option ${selectedMethod === method.id ? 'active' : ''}`}
+                  >
+                    <input
+                      type="radio"
+                      name="paymentMethod"
+                      value={method.id}
+                      checked={selectedMethod === method.id}
+                      onChange={(e) => setSelectedMethod(e.target.value)}
+                    />
+                    <span className="method-icon">{method.icon}</span>
+                    <div className="method-info">
+                      <span className="method-name">{method.name}</span>
+                      <small className="method-description">{method.description}</small>
+                    </div>
+                  </label>
+                ))}
+              </div>
+              <div className="payment-note">
+                <Shield size={16} />
+                <span>All payments are processed securely through Razorpay</span>
               </div>
             </div>
 
             <form className="payment-form" onSubmit={handlePayment}>
-              {paymentMethod === 'card' && (
-                <div className="card-details">
-                  <div className="form-group">
-                    <label>Card Number</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder="1234 5678 9012 3456"
-                      required
-                    />
-                  </div>
-                  <div className="form-row">
-                    <div className="form-group">
-                      <label>Expiry Date</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="MM/YY"
-                        required
-                      />
-                    </div>
-                    <div className="form-group">
-                      <label>CVV</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="123"
-                        required
-                      />
-                    </div>
-                  </div>
-                  <div className="form-group">
-                    <label>Cardholder Name</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder="John Doe"
-                      required
-                    />
-                  </div>
+              {error && (
+                <div className="error-message">
+                  <p>{error}</p>
                 </div>
               )}
-
-              {paymentMethod === 'upi' && (
-                <div className="upi-details">
-                  <div className="form-group">
-                    <label>UPI ID</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder="yourname@paytm"
-                      required
-                    />
+              
+              <div className="razorpay-info">
+                <div className="info-item">
+                  <Shield size={18} />
+                  <div>
+                    <strong>Secure Payment</strong>
+                    <p>Your payment is processed securely by Razorpay with bank-level encryption</p>
                   </div>
                 </div>
-              )}
+                <div className="info-item">
+                  <Heart size={18} />
+                  <div>
+                    <strong>Instant Access</strong>
+                    <p>Get your magic link immediately after successful payment</p>
+                  </div>
+                </div>
+              </div>
 
-              <div className="security-info">
-                <Shield size={16} />
-                <span>Your payment information is secure and encrypted</span>
+              <div className="payment-summary">
+                <div className="summary-row">
+                  <span>Valentine's Proposal Package</span>
+                  <span>{razorpayService.formatAmount(29)}</span>
+                </div>
+                <div className="summary-row total">
+                  <span>Total Amount</span>
+                  <span>{razorpayService.formatAmount(29)}</span>
+                </div>
               </div>
 
               <motion.button
@@ -338,7 +394,7 @@ const PaymentPage = () => {
                   </>
                 ) : (
                   <>
-                    Pay ₹29 & Create Magic Link
+                    Pay {razorpayService.formatAmount(29)} & Create Magic Link
                     <Heart size={20} />
                   </>
                 )}

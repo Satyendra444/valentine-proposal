@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Heart, Upload, ArrowLeft, User, MessageCircle, Users } from 'lucide-react'
+import { Heart, Upload, ArrowLeft, User, MessageCircle, Mail } from 'lucide-react'
 import { motion } from 'framer-motion'
+import apiService from '../services/api'
 import './ProposalForm.css'
 
 const ProposalForm = () => {
@@ -9,10 +10,13 @@ const ProposalForm = () => {
   const [formData, setFormData] = useState({
     fromName: '',
     toName: '',
+    email: '',
     message: '',
     image: null
   })
   const [imagePreview, setImagePreview] = useState(null)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [error, setError] = useState('')
 
   const handleInputChange = (e) => {
     const { name, value } = e.target
@@ -38,16 +42,30 @@ const ProposalForm = () => {
     }
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    // Store form data in localStorage for now (mock backend)
-    const proposalData = {
-      ...formData,
-      id: Date.now().toString(),
-      createdAt: new Date().toISOString()
+    setIsSubmitting(true)
+    setError('')
+    
+    try {
+      const response = await apiService.createProposal(formData)
+      
+      // Store the proposal data for payment page
+      const proposalData = {
+        proposal_id: response.proposal_id,
+        magic_link: response.magic_link,
+        ...formData
+      }
+      localStorage.setItem('proposalData', JSON.stringify(proposalData))
+      
+      // Navigate to payment page
+      navigate('/payment')
+    } catch (error) {
+      console.error('Error creating proposal:', error)
+      setError(error.message || 'Failed to create proposal. Please try again.')
+    } finally {
+      setIsSubmitting(false)
     }
-    localStorage.setItem('proposalData', JSON.stringify(proposalData))
-    navigate('/payment')
   }
 
   return (
@@ -117,6 +135,23 @@ const ProposalForm = () => {
           </div>
 
           <div className="form-group">
+            <label htmlFor="email">
+              <Mail size={18} />
+              Your Email Address
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              className="form-control"
+              placeholder="your.email@example.com"
+              value={formData.email}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+
+          <div className="form-group">
             <label htmlFor="message">
               <MessageCircle size={18} />
               Your Romantic Message
@@ -178,6 +213,12 @@ const ProposalForm = () => {
           </div>
 
           <div className="form-footer">
+            {error && (
+              <div className="error-message">
+                <p>{error}</p>
+              </div>
+            )}
+            
             <div className="proposal-question">
               <h3>💖 Will {formData.toName || 'you'} be my Valentine? 💖</h3>
               <p>This magical question will be presented to your special someone!</p>
@@ -186,11 +227,21 @@ const ProposalForm = () => {
             <motion.button
               type="submit"
               className="btn btn-primary submit-button"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
+              disabled={isSubmitting}
+              whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
+              whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
             >
-              Continue to Payment (₹29)
-              <Heart size={20} />
+              {isSubmitting ? (
+                <>
+                  <div className="spinner"></div>
+                  Creating Proposal...
+                </>
+              ) : (
+                <>
+                  Continue to Payment (₹29)
+                  <Heart size={20} />
+                </>
+              )}
             </motion.button>
           </div>
         </motion.form>

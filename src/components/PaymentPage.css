@@ -567,3 +567,183 @@
     font-size: 0.85rem;
   }
 }
+.error-message {
+  background: #fee;
+  border: 1px solid #fcc;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 20px;
+  color: #c33;
+  text-align: center;
+}
+
+.error-message p {
+  margin: 0;
+  font-weight: 500;
+}
+/* Razorpay Payment Method Styles */
+.method-option {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px;
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 10px;
+}
+
+.method-option:hover {
+  border-color: var(--primary-pink);
+  background: rgba(255, 107, 157, 0.05);
+}
+
+.method-option.active {
+  border-color: var(--primary-pink);
+  background: rgba(255, 107, 157, 0.1);
+}
+
+.method-option input[type="radio"] {
+  margin: 0;
+}
+
+.method-icon {
+  font-size: 1.5rem;
+  min-width: 30px;
+  text-align: center;
+}
+
+.method-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.method-name {
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.method-description {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.payment-note {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 15px;
+  padding: 12px;
+  background: rgba(34, 197, 94, 0.1);
+  border-radius: 8px;
+  color: #059669;
+  font-size: 0.9rem;
+}
+
+/* Razorpay Info Section */
+.razorpay-info {
+  margin-bottom: 25px;
+}
+
+.info-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 15px;
+  padding: 15px;
+  background: rgba(255, 107, 157, 0.05);
+  border-radius: 10px;
+}
+
+.info-item svg {
+  color: var(--primary-pink);
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.info-item strong {
+  color: var(--text-dark);
+  display: block;
+  margin-bottom: 4px;
+}
+
+.info-item p {
+  color: #666;
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+/* Payment Summary */
+.payment-summary {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 25px;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  color: var(--text-dark);
+}
+
+.summary-row.total {
+  font-weight: 600;
+  font-size: 1.1rem;
+  padding-top: 10px;
+  border-top: 2px solid #dee2e6;
+  margin-top: 10px;
+  margin-bottom: 0;
+}
+
+/* Responsive Design for Payment Methods */
+@media (max-width: 768px) {
+  .method-option {
+    padding: 12px;
+    gap: 12px;
+  }
+  
+  .method-icon {
+    font-size: 1.3rem;
+    min-width: 25px;
+  }
+  
+  .method-name {
+    font-size: 0.95rem;
+  }
+  
+  .method-description {
+    font-size: 0.85rem;
+  }
+  
+  .info-item {
+    padding: 12px;
+    gap: 10px;
+  }
+  
+  .payment-summary {
+    padding: 15px;
+  }
+}
+
+/* Razorpay Branding */
+.razorpay-powered {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 15px;
+  color: #666;
+  font-size: 0.85rem;
+}
+
+.razorpay-logo {
+  height: 16px;
+  opacity: 0.7;
+}

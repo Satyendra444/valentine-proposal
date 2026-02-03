@@ -1,16 +1,20 @@
 import { useState, useEffect, useRef } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useLocation } from 'react-router-dom'
 import { Heart, X } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
+import apiService from '../services/api'
 import './ProposalView.css'
 
 const ProposalView = () => {
-  const { id } = useParams()
+  const { id, token, magicLink } = useParams()
+  const location = useLocation()
   const [proposalData, setProposalData] = useState(null)
   const [response, setResponse] = useState(null)
   const [rejectAttempts, setRejectAttempts] = useState(0)
   const [showCelebration, setShowCelebration] = useState(false)
   const [rejectButtonPosition, setRejectButtonPosition] = useState({ x: 0, y: 0 })
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState('')
   const rejectButtonRef = useRef(null)
   const pageRef = useRef(null)
 
@@ -138,16 +142,51 @@ const ProposalView = () => {
   ]
 
   useEffect(() => {
-    // Mock loading proposal data
-    const mockData = {
-      fromName: "Alex Johnson",
-      toName: "Sarah",
-      message: "You light up my world like nobody else! Every moment with you feels like magic, and I can't imagine my life without your beautiful smile. You make every day feel like Valentine's Day! 💕",
-      image: "https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?w=400&h=400&fit=crop&crop=face",
-      createdAt: new Date().toISOString()
+    const loadProposal = async () => {
+      setLoading(true)
+      setError('')
+      
+      try {
+        let data
+        
+        // Determine which API endpoint to use based on the route
+        if (token) {
+          // Access token route - view proposal after payment
+          data = await apiService.viewProposal(token)
+        } else if (magicLink) {
+          // Magic link route - for payment page
+          data = await apiService.getProposalByMagicLink(magicLink)
+        } else if (id) {
+          // Legacy route - try to load from localStorage or show error
+          const storedData = localStorage.getItem('proposalData')
+          if (storedData) {
+            const parsed = JSON.parse(storedData)
+            data = {
+              from_name: parsed.fromName,
+              to_name: parsed.toName,
+              email: parsed.email,
+              message: parsed.message,
+              image_url: parsed.image ? URL.createObjectURL(parsed.image) : null,
+              created_at: parsed.createdAt || new Date().toISOString()
+            }
+          } else {
+            throw new Error('Proposal not found')
+          }
+        } else {
+          throw new Error('Invalid proposal URL')
+        }
+        
+        setProposalData(data)
+      } catch (error) {
+        console.error('Error loading proposal:', error)
+        setError(error.message || 'Failed to load proposal')
+      } finally {
+        setLoading(false)
+      }
     }
-    setProposalData(mockData)
-  }, [id])
+    
+    loadProposal()
+  }, [id, token, magicLink])
 
   const moveRejectButton = () => {
     if (!rejectButtonRef.current) return
@@ -225,6 +264,36 @@ const ProposalView = () => {
     }
   }
 
+  if (loading) {
+    return (
+      <div className="proposal-loading">
+        <div className="loading-hearts">
+          <Heart className="heart-1" />
+          <Heart className="heart-2" />
+          <Heart className="heart-3" />
+        </div>
+        <p>Loading your magical proposal...</p>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="proposal-error">
+        <div className="error-content">
+          <h2>Oops! Something went wrong</h2>
+          <p>{error}</p>
+          <button 
+            className="btn btn-primary"
+            onClick={() => window.location.href = '/'}
+          >
+            Go Home
+          </button>
+        </div>
+      </div>
+    )
+  }
+
   if (!proposalData) {
     return (
       <div className="proposal-loading">
@@ -295,14 +364,14 @@ const ProposalView = () => {
             </div>
 
             <div className="proposal-content">
-              {proposalData.image && (
+              {proposalData.image_url && (
                 <motion.div 
                   className="proposal-image"
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
                   transition={{ delay: 0.3, type: "spring", stiffness: 200 }}
                 >
-                  <img src={proposalData.image} alt="Special moment" />
+                  <img src={proposalData.image_url} alt="Special moment" />
                   <div className="image-hearts">
                     <span>💖</span>
                     <span>💕</span>
@@ -317,8 +386,8 @@ const ProposalView = () => {
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.6, duration: 0.8 }}
               >
-                <p>From: <strong>{proposalData.fromName}</strong></p>
-                <p>To: <strong>{proposalData.toName}</strong></p>
+                <p>From: <strong>{proposalData.from_name}</strong></p>
+                <p>To: <strong>{proposalData.to_name}</strong></p>
                 <div className="message-text">
                   {proposalData.message}
                 </div>
@@ -330,7 +399,7 @@ const ProposalView = () => {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 1, type: "spring", stiffness: 150 }}
               >
-                <h2>💖 Will {proposalData.toName}, be my Valentine? 💖</h2>
+                <h2>💖 Will {proposalData.to_name}, be my Valentine? 💖</h2>
               </motion.div>
 
               <motion.div 
