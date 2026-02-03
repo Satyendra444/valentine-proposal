@@ -1,0 +1,293 @@
+.proposal-form-page {
+  min-height: 100vh;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.form-container {
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+.form-header {
+  text-align: center;
+  margin-bottom: 40px;
+  position: relative;
+}
+
+.back-button {
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: white;
+  border: 2px solid var(--primary-pink);
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary-pink);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.back-button:hover {
+  background: var(--primary-pink);
+  color: white;
+  transform: translateX(-3px);
+}
+
+.form-header h1 {
+  font-size: 2.5rem;
+  color: var(--text-dark);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.form-header .heart-icon {
+  color: var(--primary-pink);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.form-header p {
+  color: #666;
+  font-size: 1.1rem;
+}
+
+.proposal-form {
+  background: white;
+  padding: 40px;
+  border-radius: 25px;
+  box-shadow: var(--shadow);
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.form-group label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.image-upload-container {
+  position: relative;
+}
+
+.image-input {
+  display: none;
+}
+
+.image-upload-label {
+  display: block;
+  cursor: pointer;
+  border: 3px dashed var(--secondary-pink);
+  border-radius: 20px;
+  transition: all 0.3s ease;
+  background: linear-gradient(135deg, #ffeef0 0%, #fff5f7 100%);
+  overflow: hidden;
+}
+
+.image-upload-label:hover {
+  border-color: var(--primary-pink);
+  background: linear-gradient(135deg, #ffe4e6 0%, #ffeef0 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 107, 157, 0.15);
+}
+
+.upload-placeholder {
+  padding: 50px 30px;
+  text-align: center;
+  color: #666;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.upload-icon-container {
+  background: var(--gradient);
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  margin-bottom: 10px;
+}
+
+.upload-text {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.upload-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.upload-subtitle {
+  color: #999;
+  font-size: 0.9rem;
+}
+
+.upload-hint {
+  color: var(--primary-pink);
+  font-style: italic;
+  font-size: 0.95rem;
+  margin-top: 5px;
+}
+
+.image-preview {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  background: white;
+}
+
+.image-preview img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  display: block;
+}
+
+.image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.image-preview:hover .image-overlay {
+  opacity: 1;
+}
+
+.overlay-content {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.overlay-content span {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.overlay-content small {
+  opacity: 0.8;
+  font-size: 0.9rem;
+}
+
+.form-footer {
+  margin-top: 40px;
+  text-align: center;
+}
+
+.proposal-question {
+  background: var(--light-pink);
+  padding: 25px;
+  border-radius: 15px;
+  margin-bottom: 30px;
+}
+
+.proposal-question h3 {
+  color: var(--text-dark);
+  font-size: 1.5rem;
+  margin-bottom: 8px;
+}
+
+.proposal-question p {
+  color: #666;
+  margin: 0;
+}
+
+.submit-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.1rem;
+  padding: 16px 35px;
+}
+
+.floating-elements {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.floating-elements div {
+  position: absolute;
+  font-size: 2.5rem;
+  animation: float 5s ease-in-out infinite;
+  opacity: 0.2;
+}
+
+.floating-heart-1 {
+  top: 15%;
+  left: 5%;
+  animation-delay: 0s;
+}
+
+.floating-heart-2 {
+  top: 60%;
+  right: 8%;
+  animation-delay: 2s;
+}
+
+.floating-heart-3 {
+  bottom: 20%;
+  left: 10%;
+  animation-delay: 4s;
+}
+
+@media (max-width: 768px) {
+  .form-header h1 {
+    font-size: 2rem;
+  }
+  
+  .proposal-form {
+    padding: 25px;
+  }
+  
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  
+  .back-button {
+    position: relative;
+    margin-bottom: 20px;
+  }
+}
