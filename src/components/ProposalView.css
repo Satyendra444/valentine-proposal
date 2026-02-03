@@ -356,8 +356,9 @@
 }
 
 .floating-reject {
-  z-index: 10;
+  z-index: 9999 !important;
   transition: all 0.3s ease;
+  position: fixed !important;
 }
 
 .floating-reject:hover {
@@ -370,7 +371,7 @@
 .proposal-card {
   position: relative;
   min-height: 700px;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .reject-btn {
@@ -378,6 +379,16 @@
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
+  white-space: nowrap;
+}
+
+/* When button is floating, it should be above everything */
+.reject-btn.floating-reject {
+  position: fixed !important;
+  z-index: 9999 !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  border: 2px solid #ddd;
+  background: white;
 }
 
 /* Additional spacing for mobile */
@@ -390,9 +401,11 @@
   
   .proposal-card {
     min-height: 600px;
+    overflow: visible;
   }
   
   .floating-reject {
-    position: absolute !important;
+    position: fixed !important;
+    z-index: 9999 !important;
   }
 }
