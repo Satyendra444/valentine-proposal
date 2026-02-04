@@ -14,7 +14,6 @@ function App() {
         <Route path="/create" element={<ProposalForm />} />
         <Route path="/payment" element={<PaymentPage />} />
         <Route path="/proposal/view/:token" element={<ProposalView />} />
-        <Route path="/proposal/magic/:magicLink" element={<PaymentPage />} />
       </Routes>
       <EnvCheck />
     </div>
