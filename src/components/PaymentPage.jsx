@@ -235,16 +235,14 @@ const PaymentPage = () => {
               <div className="modal-actions">
                 <motion.button
                   className="btn btn-secondary"
-                  onClick={() => navigate('/')}
+                  onClick={() => window.open('/', '_blank')}
                   whileHover={{ scale: 1.02 }}
                 >
                   Create Another
                 </motion.button>
                 <motion.button
                   className="btn btn-primary"
-                  onClick={() => {
-                    navigate(`/proposal/view/${accessToken}`)
-                  }}
+                  onClick={() => window.open(`/proposal/view/${accessToken}`, '_blank')}
                   whileHover={{ scale: 1.02 }}
                 >
                   Preview Proposal
@@ -303,7 +301,7 @@ const PaymentPage = () => {
             </div>
 
             <div className="next-steps">
-              <button className="btn btn-secondary" onClick={() => navigate('/')}>Create Another</button>
+              <button className="btn btn-secondary" onClick={() => window.open('/', '_blank')}>Create Another</button>
               <button className="btn btn-primary" onClick={() => window.open(magicLink, '_blank')}>View Proposal <TrendingUp size={18} /></button>
             </div>
           </motion.div>
