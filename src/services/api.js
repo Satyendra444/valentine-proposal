@@ -1,5 +1,31 @@
 // API service for Valentine's Day Proposal App
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api'
+const getApiBaseUrl = () => {
+  // Check if we have a custom API URL from environment
+  if (import.meta.env.VITE_API_URL) {
+    return import.meta.env.VITE_API_URL
+  }
+  
+  // Auto-detect based on current domain
+  if (typeof window !== 'undefined') {
+    const hostname = window.location.hostname
+    
+    // Production domains - use your deployed API
+    if (hostname.includes('vercel.app') || hostname.includes('netlify.app')) {
+      return 'https://valentine-backend-nzr4.onrender.com/api'
+    }
+    
+    // Local development
+    if (hostname === 'localhost' || hostname === '127.0.0.1') {
+      return 'http://localhost:8000/api'
+    }
+  }
+  
+  // Fallback to deployed API
+  return 'https://valentine-backend-nzr4.onrender.com/api'
+}
+
+const API_BASE_URL = getApiBaseUrl()
+console.log('API Base URL:', API_BASE_URL)
 
 class ApiService {
   // Helper method for making API requests
@@ -66,12 +92,29 @@ class ApiService {
 
   // Get proposal by magic link
   async getProposalByMagicLink(magicLink) {
-    return await this.makeRequest(`/proposals/magic/${magicLink}`)
+    // Validate magic link format
+    if (!magicLink || typeof magicLink !== 'string') {
+      throw new Error('Invalid magic link format')
+    }
+    
+    console.log('API: getProposalByMagicLink called with:', magicLink)
+    return await this.makeRequest(`/proposals/magic/${encodeURIComponent(magicLink)}`)
   }
 
   // View proposal with access token
   async viewProposal(token) {
-    return await this.makeRequest(`/proposals/view/${token}`)
+    // Validate token format
+    if (!token || typeof token !== 'string') {
+      throw new Error('Invalid access token format')
+    }
+    
+    // Check for suspicious token patterns
+    if (token.length < 10 || token.length > 200) {
+      throw new Error(`Invalid token length: ${token.length}`)
+    }
+    
+    console.log('API: viewProposal called with token:', token)
+    return await this.makeRequest(`/proposals/view/${encodeURIComponent(token)}`)
   }
 
   // Create payment intent (Stripe - as per API docs)

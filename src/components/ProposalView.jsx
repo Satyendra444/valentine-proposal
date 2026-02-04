@@ -146,12 +146,26 @@ const ProposalView = () => {
       setLoading(true)
       setError('')
       
+      // Debug logging
+      console.log('ProposalView - Route params:', { id, token, magicLink })
+      console.log('ProposalView - Current URL:', window.location.href)
+      console.log('ProposalView - Pathname:', location.pathname)
+      
+      if (token) {
+        console.log('ProposalView - Token details:', {
+          length: token.length,
+          value: token,
+          hasSpecialChars: /[^a-zA-Z0-9\-_]/.test(token)
+        })
+      }
+      
       try {
         let data
         
         // Determine which API endpoint to use based on the route
         if (token) {
           // Access token route - view proposal after payment
+          console.log('ProposalView - Calling viewProposal API with token:', token)
           data = await apiService.viewProposal(token)
         } else if (magicLink) {
           // Magic link route - for payment page
@@ -273,6 +287,22 @@ const ProposalView = () => {
           <Heart className="heart-3" />
         </div>
         <p>Loading your magical proposal...</p>
+        {/* Debug info in loading state */}
+        {!import.meta.env.PROD && (
+          <div style={{ 
+            marginTop: '20px', 
+            padding: '10px', 
+            background: '#f0f0f0', 
+            borderRadius: '5px',
+            fontSize: '12px',
+            fontFamily: 'monospace'
+          }}>
+            <div>Token: {token}</div>
+            <div>Token Length: {token?.length}</div>
+            <div>Magic Link: {magicLink}</div>
+            <div>ID: {id}</div>
+          </div>
+        )}
       </div>
     )
   }
@@ -283,6 +313,29 @@ const ProposalView = () => {
         <div className="error-content">
           <h2>Oops! Something went wrong</h2>
           <p>{error}</p>
+          
+          {/* Debug info in error state */}
+          {!import.meta.env.PROD && (
+            <div style={{ 
+              marginTop: '20px', 
+              padding: '15px', 
+              background: '#f8f9fa', 
+              borderRadius: '8px',
+              fontSize: '12px',
+              fontFamily: 'monospace',
+              textAlign: 'left',
+              border: '1px solid #dee2e6'
+            }}>
+              <strong>Debug Info:</strong><br/>
+              <div>URL: {window.location.href}</div>
+              <div>Token: {token || 'undefined'}</div>
+              <div>Token Length: {token?.length || 0}</div>
+              <div>Magic Link: {magicLink || 'undefined'}</div>
+              <div>ID: {id || 'undefined'}</div>
+              <div>Pathname: {location.pathname}</div>
+            </div>
+          )}
+          
           <button 
             className="btn btn-primary"
             onClick={() => window.location.href = '/'}
