@@ -6,7 +6,6 @@ import apiService from '../services/api'
 import './ProposalView.css'
 
 const ProposalView = () => {
-  return <div>{"Proposal View"}</div>
   const { id, token, magicLink } = useParams()
   const location = useLocation()
   const [proposalData, setProposalData] = useState(null)
