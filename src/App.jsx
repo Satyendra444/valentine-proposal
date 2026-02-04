@@ -3,6 +3,7 @@ import LandingPage from './components/LandingPage'
 import ProposalForm from './components/ProposalForm'
 import PaymentPage from './components/PaymentPage'
 import ProposalView from './components/ProposalView'
+import DemoProposalView from './components/DemoProposalView'
 import EnvCheck from './components/EnvCheck'
 import './App.css'
 
@@ -13,6 +14,7 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/create" element={<ProposalForm />} />
         <Route path="/payment" element={<PaymentPage />} />
+        <Route path="/demo-proposal" element={<DemoProposalView />} />
         <Route path="/proposal/view/:token" element={<ProposalView />} />
       </Routes>
       <EnvCheck />

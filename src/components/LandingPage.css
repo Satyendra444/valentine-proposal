@@ -188,3 +188,26 @@
     gap: 20px;
   }
 }
+/* Demo Button */
+.demo-button {
+  margin-left: 15px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+@media (max-width: 768px) {
+  .cta-section {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+  }
+  
+  .demo-button {
+    margin-left: 0;
+    width: 100%;
+    max-width: 300px;
+    justify-content: center;
+  }
+}

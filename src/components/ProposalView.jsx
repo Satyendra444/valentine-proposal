@@ -203,42 +203,15 @@ const ProposalView = () => {
   }, [id, token, magicLink])
 
   const moveRejectButton = () => {
-    if (!rejectButtonRef.current) return
+    // Generate even larger random movement from current position
+    const moveDistance = 200 // Increased from 150
+    const randomX = (Math.random() - 0.5) * moveDistance * 2
+    const randomY = (Math.random() - 0.5) * moveDistance * 2
     
-    // Use viewport dimensions for movement within entire page
-    const viewportWidth = window.innerWidth
-    const viewportHeight = window.innerHeight
-    const buttonWidth = 120 // approximate button width
-    const buttonHeight = 50 // approximate button height
-    
-    // Calculate safe boundaries within viewport
-    const maxX = viewportWidth - buttonWidth - 40
-    const maxY = viewportHeight - buttonHeight - 40
-    const minX = 20
-    const minY = 20
-    
-    // Generate random position anywhere in the viewport
-    const positions = [
-      // Top area
-      { x: minX + Math.random() * (maxX - minX), y: minY + Math.random() * 100 },
-      // Bottom area  
-      { x: minX + Math.random() * (maxX - minX), y: maxY - 100 + Math.random() * 100 },
-      // Left area
-      { x: minX + Math.random() * 150, y: minY + Math.random() * (maxY - minY) },
-      // Right area
-      { x: maxX - 150 + Math.random() * 150, y: minY + Math.random() * (maxY - minY) },
-      // Center areas (but not too close to original position)
-      { x: viewportWidth * 0.2 + Math.random() * (viewportWidth * 0.6), y: viewportHeight * 0.2 + Math.random() * (viewportHeight * 0.6) }
-    ]
-    
-    const randomPosition = positions[Math.floor(Math.random() * positions.length)]
-    
-    // Set position for fixed positioning
-    setRejectButtonPosition({
-      x: randomPosition.x,
-      y: randomPosition.y
+    setRejectButtonPosition({ 
+      x: randomX, 
+      y: randomY 
     })
-    
     setRejectAttempts(prev => prev + 1)
   }
 
@@ -488,22 +461,19 @@ const ProposalView = () => {
                   onMouseEnter={handleRejectHover}
                   onFocus={handleRejectHover}
                   animate={{
-                    x: rejectAttempts > 0 ? 0 : 0,
-                    y: rejectAttempts > 0 ? 0 : 0
+                    x: rejectButtonPosition.x,
+                    y: rejectButtonPosition.y
                   }}
                   transition={{
                     type: "spring",
-                    stiffness: 500,
-                    damping: 30,
-                    duration: 0.3
+                    stiffness: 800, // Increased from 500 for even faster movement
+                    damping: 15,    // Reduced from 20 for more bouncy movement
+                    duration: 0.2   // Reduced from 0.3 for super fast animation
                   }}
-                  whileHover={rejectAttempts < 10000 ? {} : { scale: 1.05 }}
+                  whileHover={rejectAttempts < 100 ? {} : { scale: 1.05 }}
                   style={{
-                    position: rejectAttempts > 0 ? 'fixed' : 'static',
-                    left: rejectAttempts > 0 ? `${rejectButtonPosition.x}px` : 'auto',
-                    top: rejectAttempts > 0 ? `${rejectButtonPosition.y}px` : 'auto',
-                    zIndex: rejectAttempts > 0 ? 9999 : 'auto',
-                    cursor: 'pointer'
+                    cursor: 'pointer',
+                    zIndex: 10
                   }}
                 >
                   <X size={20} />
@@ -519,10 +489,6 @@ const ProposalView = () => {
                 >
                   <p>
                     {getRejectMessage()}
-
-
-                    {rejectAttempts === 4 && "It's trying to escape! Maybe give love a chance? �"}
-                    {rejectAttempts >= 5 && "Okay, you can click it now... but that YES button is still glowing! ✨"}
                   </p>
                 </motion.div>
               )}

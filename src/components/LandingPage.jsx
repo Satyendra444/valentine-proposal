@@ -97,6 +97,9 @@ const LandingPage = () => {
             <Link to="/create" className="btn btn-primary cta-button">
               Create Your Proposal <ArrowRight size={20} />
             </Link>
+            <Link to="/demo-proposal" className="btn btn-secondary demo-button">
+              👀 View Live Demo
+            </Link>
             <p className="price-text">Only ₹29 - Make this Valentine's Day Special!</p>
           </motion.div>
         </motion.div>
