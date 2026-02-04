@@ -27,15 +27,16 @@ const DemoProposalView = () => {
   ]
 
   const moveRejectButton = () => {
-    // Generate even larger random movement from current position
-    const moveDistance = 160 // Increased from 120
-    const randomX = (Math.random() - 0.5) * moveDistance * 2
-    const randomY = (Math.random() - 0.5) * moveDistance * 2
-    
-    setRejectButtonPosition({ 
-      x: randomX, 
-      y: randomY 
-    })
+    // Generate movement but keep it reasonably close to prevent user frustration/disappearing
+    const baseDistance = 50;
+    const variableDistance = Math.min(rejectAttempts * 5, 100);
+    const maxDistance = baseDistance + variableDistance;
+
+    const randomAngle = Math.random() * 2 * Math.PI;
+    const x = Math.cos(randomAngle) * maxDistance;
+    const y = Math.sin(randomAngle) * maxDistance;
+
+    setRejectButtonPosition({ x, y })
     setRejectAttempts(prev => prev + 1)
   }
 
@@ -72,7 +73,7 @@ const DemoProposalView = () => {
   return (
     <div className="demo-proposal-view" ref={containerRef}>
       <div className="demo-header">
-        <button 
+        <button
           className="back-button"
           onClick={() => navigate('/')}
         >
@@ -100,8 +101,8 @@ const DemoProposalView = () => {
                 <h1>🎉 YES! 🎉</h1>
                 <p>Amazing! This is how it feels when they say YES! 💕</p>
                 <div className="celebration-gif">
-                  <img 
-                    src="https://media.giphy.com/media/26u4cqiYI30juCOGY/giphy.gif" 
+                  <img
+                    src="https://media.giphy.com/media/26u4cqiYI30juCOGY/giphy.gif"
                     alt="Celebration"
                   />
                 </div>
@@ -117,7 +118,7 @@ const DemoProposalView = () => {
       </AnimatePresence>
 
       {!showCelebration && (
-        <motion.div 
+        <motion.div
           className="demo-proposal-container"
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
@@ -125,7 +126,7 @@ const DemoProposalView = () => {
         >
           <div className="demo-proposal-card">
             <div className="demo-proposal-header">
-              <motion.div 
+              <motion.div
                 className="hearts-decoration"
                 animate={{ rotate: 360 }}
                 transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
@@ -136,15 +137,15 @@ const DemoProposalView = () => {
             </div>
 
             <div className="demo-proposal-content">
-              <motion.div 
+              <motion.div
                 className="proposal-image"
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ delay: 0.3, type: "spring", stiffness: 200 }}
               >
-                <img 
-                  src="https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?w=400&h=400&fit=crop&crop=face" 
-                  alt="Demo couple" 
+                <img
+                  src="https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?w=400&h=400&fit=crop&crop=face"
+                  alt="Demo couple"
                 />
                 <div className="image-hearts">
                   <span>💖</span>
@@ -153,7 +154,7 @@ const DemoProposalView = () => {
                 </div>
               </motion.div>
 
-              <motion.div 
+              <motion.div
                 className="proposal-message"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -166,7 +167,7 @@ const DemoProposalView = () => {
                 </div>
               </motion.div>
 
-              <motion.div 
+              <motion.div
                 className="proposal-question"
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -175,7 +176,7 @@ const DemoProposalView = () => {
                 <h2>💖 Will Sarah, be my Valentine? 💖</h2>
               </motion.div>
 
-              <motion.div 
+              <motion.div
                 className="proposal-actions"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -186,14 +187,14 @@ const DemoProposalView = () => {
                   onClick={handleAccept}
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.95 }}
-                  animate={{ 
+                  animate={{
                     boxShadow: [
                       "0 0 20px rgba(255, 107, 157, 0.5)",
                       "0 0 40px rgba(255, 107, 157, 0.8)",
                       "0 0 20px rgba(255, 107, 157, 0.5)"
                     ]
                   }}
-                  transition={{ 
+                  transition={{
                     boxShadow: { duration: 2, repeat: Infinity }
                   }}
                 >
@@ -219,7 +220,8 @@ const DemoProposalView = () => {
                   }}
                   style={{
                     cursor: 'pointer',
-                    zIndex: 10
+                    zIndex: 10,
+                    position: 'relative' // Ensure it starts in flow
                   }}
                 >
                   <X size={20} />
@@ -228,7 +230,7 @@ const DemoProposalView = () => {
               </motion.div>
 
               {rejectAttempts > 0 && (
-                <motion.div 
+                <motion.div
                   className="reject-message"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
