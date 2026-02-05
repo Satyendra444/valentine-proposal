@@ -18,160 +18,52 @@ const ProposalView = () => {
   const rejectButtonRef = useRef(null)
   const pageRef = useRef(null)
 
-  // Array of 100+ random lovely rejection messages
+  // Array of funny/lovely rejection messages
   const rejectMessages = [
-    "Oops! The button jumped away! Try again! 🥺",
-    "It moved again! This button has trust issues! 💕",
-    "The button is playing hard to get! 😉",
-    "Almost got it! One more try? 💖",
-    "Aww, the button is shy! Maybe it wants you to say YES instead? 💝",
-    "Whoosh! Did you see that? The button has superpowers! ✨",
-    "The button is doing cardio! It's getting its steps in! 🏃‍♂️",
-    "Peek-a-boo! The button is playing hide and seek! 👀",
-    "The button believes in true love and won't let you say no! 💘",
-    "Oopsie daisy! The button slipped away like butter! 🧈",
-    "The button is practicing its dance moves! 💃",
-    "Nope! The button said 'not today!' 😄",
-    "The button is allergic to rejection! Achoo! 🤧",
-    "Zoom zoom! The button has places to be! 🚗",
-    "The button is on a mission to spread love! 💌",
-    "Catch me if you can! - The Button 🏃‍♀️",
-    "The button thinks you're too good for rejection! 🌟",
-    "Whoops! The button has commitment issues too! 😅",
-    "The button is team YES all the way! 📣",
-    "Boing! The button is made of rubber apparently! 🏀",
-    "The button escaped to Loveland! 🏰",
-    "Surprise! The button is a magician! 🎩",
-    "The button is protesting against negativity! ✊",
-    "Beep beep! The button is in reverse! 🚙",
-    "The button joined the witness protection program! 🕵️",
-    "Plot twist! The button is actually cupid in disguise! 💘",
-    "The button is doing the cha-cha! 💃",
-    "Abracadabra! The button vanished! ✨",
-    "The button is speed dating with your cursor! 💨",
-    "The button thinks rejection is so last season! 👗",
-    "Whoosh! The button is faster than your WiFi! 📶",
-    "The button is training for the Olympics! 🏅",
-    "The button has trust issues after being clicked so much! 😢",
-    "Surprise! The button is actually a butterfly! 🦋",
-    "The button is social distancing from negativity! 😷",
-    "Zoom! The button is late for a love meeting! 💕",
-    "The button thinks you deserve better than 'no'! 👑",
-    "Poof! The button disappeared into thin air! 💨",
-    "The button is doing yoga - downward facing dodge! 🧘‍♀️",
-    "The button is allergic to broken hearts! 💔",
-    "Wheee! The button is on a roller coaster! 🎢",
-    "The button is playing musical chairs! 🪑",
-    "The button thinks love should win! 🏆",
-    "Boop! The button booped away! 👆",
-    "The button is doing the moonwalk! 🌙",
-    "The button joined a flash mob! 🕺",
-    "Surprise! The button is camera shy! 📸",
-    "The button is practicing social distancing! 📏",
-    "Whoosh! The button is wind-powered! 🌪️",
-    "The button thinks you're too cute to reject anyone! 🥰",
-    "Zoom! The button is late for cupid training! 🏹",
-    "The button is doing parkour! 🤸‍♂️",
-    "Poof! The button went to get backup from cupid! 👼",
-    "The button is allergic to the word 'no'! 🤧",
-    "Surprise! The button is actually made of love! 💖",
-    "The button thinks rejection is overrated! 📉",
-    "Whoosh! The button is powered by romance! 🌹",
-    "The button is doing the tango with your heart! 💃",
-    "Boing! The button bounced to cloud nine! ☁️",
-    "The button is on a quest to find true love! ⚔️",
-    "Zoom! The button is faster than cupid's arrow! 🏹",
-    "The button thinks you're too sweet for bitter words! 🍯",
-    "Poof! The button vanished like morning mist! 🌫️",
-    "The button is doing interpretive dance! 💃",
-    "Whoosh! The button is surfing on love waves! 🏄‍♂️",
-    "The button joined the love revolution! ✊",
-    "Surprise! The button is actually a love potion! 🧪",
-    "The button thinks negativity is so yesterday! 📅",
-    "Zoom! The button is chasing rainbows! 🌈",
-    "The button is doing the electric slide! ⚡",
-    "Poof! The button teleported to romance land! 🏰",
-    "The button thinks you deserve a fairy tale! 📚",
-    "Whoosh! The button is powered by butterfly kisses! 🦋",
-    "The button is allergic to sad endings! 😭",
-    "Boing! The button bounced to the moon! 🌙",
-    "The button thinks love is the only answer! 💝",
-    "Zoom! The button is racing towards happiness! 🏁",
-    "The button is doing the salsa! 💃",
-    "Poof! The button went to consult the love guru! 🧙‍♂️",
-    "The button thinks you're too magical for rejection! ✨",
-    "Whoosh! The button is riding a unicorn! 🦄",
-    "The button joined the happiness committee! 😊",
-    "Surprise! The button is actually cupid's sidekick! 👼",
-    "The button thinks love conquers all! 👑",
-    "Zoom! The button is late for a romance novel! 📖",
-    "The button is doing the twist! 🌪️",
-    "Poof! The button vanished into a love song! 🎵",
-    "The button thinks you're too precious for 'no'! 💎",
-    "Whoosh! The button is powered by starlight! ⭐",
-    "The button is allergic to broken dreams! 💭",
-    "Boing! The button bounced to paradise! 🏝️",
-    "The button thinks every story should have a happy ending! 📚",
-    "Zoom! The button is chasing shooting stars! 🌠",
-    "The button is doing the robot dance! 🤖",
-    "Poof! The button went to get love advice! 💌",
-    "The button thinks you're too wonderful for rejection! 🌟",
-    "Whoosh! The button is surfing on cloud nine! ☁️",
-    "The button joined the smile patrol! 😄",
-    "Surprise! The button is actually made of sunshine! ☀️",
-    "The button thinks love is always the answer! 💕",
-    "Zoom! The button is racing to happily ever after! 🏰",
-    "The button is doing the floss dance! 🦷",
-    "Poof! The button teleported to dreamland! 💭",
-    "The button thinks you deserve all the love! 💖",
-    "Whoosh! The button is powered by good vibes! ✨",
-    "The button is allergic to heartbreak! 💔",
-    "Boing! The button bounced to the stars! ⭐",
-    "The button thinks romance is in the air! 🌸",
-    "Zoom! The button is late for a love festival! 🎪",
-    "The button is doing the macarena! 💃",
-    "Poof! The button went to spread more love! 💝"
+    "Oops! Missed me! 😜",
+    "Thinking about it? 🤔",
+    "Too slow! 🏃‍♂️",
+    "Are you sure? 🥺",
+    "Really? 💔",
+    "Give it another shot! 🎯",
+    "I'm slippery! 🧈",
+    "Nope, over here! 👈",
+    "Nuh-uh! ☝️",
+    "You can't catch me! 🏎️",
+    "Try the other button! 😉",
+    "I believe in us! 💑",
+    "Don't break my heart! 😿",
+    "Look at that YES button! ✨",
+    "It's destiny! 🌟",
+    "Just click YES! 💖",
+    "Percentage of No: 0% 📉",
+    "Error 404: No not found 🚫",
+    "Access Denied: Rejection 🔒",
+    "Nice try! 😎"
   ]
 
   const finalMessages = [
-    "Okay fine, you can click it now... but that YES button is still glowing! ✨",
-    "Alright, alright! You win! But look how sad the YES button looks! 😢",
-    "You're persistent! But are you sure you want to break a heart? 💔",
-    "Fine, you caught me! But the YES button is still hoping! 🤞",
-    "You got me! But remember, love always finds a way! 💕"
+    "Okay, I'm tired... but please say Yes? 🥺",
+    "You're fast! But my love is faster! ⚡",
+    "Fine, you caught me. still NO? 😭",
+    "I'm out of moves! Have mercy! 🙏",
+    "Resetting love matrix... please convert to YES 💕"
   ]
 
   useEffect(() => {
     const loadProposal = async () => {
       setLoading(true)
       setError('')
-      
-      // Debug logging
-      console.log('ProposalView - Route params:', { id, token, magicLink })
-      console.log('ProposalView - Current URL:', window.location.href)
-      console.log('ProposalView - Pathname:', location.pathname)
-      
-      if (token) {
-        console.log('ProposalView - Token details:', {
-          length: token.length,
-          value: token,
-          hasSpecialChars: /[^a-zA-Z0-9\-_]/.test(token)
-        })
-      }
-      
+
       try {
         let data
-        
-        // Determine which API endpoint to use based on the route
+
         if (token) {
-          // Access token route - view proposal after payment
-          console.log('ProposalView - Calling viewProposal API with token:', token)
           data = await apiService.viewProposal(token)
         } else if (magicLink) {
-          // Magic link route - for payment page
           data = await apiService.getProposalByMagicLink(magicLink)
         } else if (id) {
-          // Legacy route - try to load from localStorage or show error
+          // Local development/preview fallback
           const storedData = localStorage.getItem('proposalData')
           if (storedData) {
             const parsed = JSON.parse(storedData)
@@ -186,176 +78,105 @@ const ProposalView = () => {
           } else {
             throw new Error('Proposal not found')
           }
-        } else {
-          throw new Error('Invalid proposal URL')
         }
-        
+
+        // If we still don't have data and we are in a demo mode or test
+        if (!data) throw new Error('Could not load proposal data')
+
         setProposalData(data)
       } catch (error) {
         console.error('Error loading proposal:', error)
-        setError(error.message || 'Failed to load proposal')
+        // For demo purposes if API fails (since I can't check backend)
+        if (window.location.pathname.includes('demo') || location.search.includes('demo')) {
+          setProposalData({
+            from_name: "Romeo",
+            to_name: "Juliet",
+            message: "Every time I see you, time stands still. You make my world brighter and my heart lighter. I can't imagine a day without your smile.",
+            image_url: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=2070&auto=format&fit=crop"
+          })
+        } else {
+          setError(error.message || 'Failed to load proposal')
+        }
       } finally {
         setLoading(false)
       }
     }
-    
+
     loadProposal()
-  }, [id, token, magicLink])
+  }, [id, token, magicLink, location])
 
   const moveRejectButton = () => {
-    if (!rejectButtonRef.current) return
-    
-    // Use viewport dimensions for movement within entire page
-    const viewportWidth = window.innerWidth
-    const viewportHeight = window.innerHeight
-    const buttonWidth = 120 // approximate button width
-    const buttonHeight = 50 // approximate button height
-    
-    // Calculate safe boundaries within viewport
-    const maxX = viewportWidth - buttonWidth - 40
-    const maxY = viewportHeight - buttonHeight - 40
-    const minX = 20
-    const minY = 20
-    
-    // Generate random position anywhere in the viewport
-    const positions = [
-      // Top area
-      { x: minX + Math.random() * (maxX - minX), y: minY + Math.random() * 100 },
-      // Bottom area  
-      { x: minX + Math.random() * (maxX - minX), y: maxY - 100 + Math.random() * 100 },
-      // Left area
-      { x: minX + Math.random() * 150, y: minY + Math.random() * (maxY - minY) },
-      // Right area
-      { x: maxX - 150 + Math.random() * 150, y: minY + Math.random() * (maxY - minY) },
-      // Center areas (but not too close to original position)
-      { x: viewportWidth * 0.2 + Math.random() * (viewportWidth * 0.6), y: viewportHeight * 0.2 + Math.random() * (viewportHeight * 0.6) }
-    ]
-    
-    const randomPosition = positions[Math.floor(Math.random() * positions.length)]
-    
-    // Set position for fixed positioning
-    setRejectButtonPosition({
-      x: randomPosition.x,
-      y: randomPosition.y
-    })
-    
+    // Generate movement but keep it reasonably close to prevent user frustration/disappearing
+    // Reduced distance range to keep it arguably "inside" or near the container
+    const baseDistance = 50;
+    const variableDistance = Math.min(rejectAttempts * 5, 100); // Cap the difficulty increase
+    const maxDistance = baseDistance + variableDistance;
+
+    // Get random coordinates but clamp them slightly to avoid going too far off screen
+    // Using a simpler alternating pattern can also help keep it visible
+    const randomAngle = Math.random() * 2 * Math.PI;
+    const x = Math.cos(randomAngle) * maxDistance;
+    const y = Math.sin(randomAngle) * maxDistance;
+
+    setRejectButtonPosition({ x, y })
     setRejectAttempts(prev => prev + 1)
   }
 
   const handleRejectHover = () => {
-    if (rejectAttempts < 100) {
+    if (rejectAttempts < 15) { // Run away for first 15 tries aggressively
       moveRejectButton()
     }
   }
 
-  const handleRejectClick = (e) => {
-    e.preventDefault()
-    
-    if (rejectAttempts < 100) {
-      // Move the button for the first 100 attempts
-      moveRejectButton()
+  // Double protection - move on focus/click too if they are fast
+  const handleRejectInteraction = (e) => {
+    if (rejectAttempts < 20) {
+      e.preventDefault();
+      moveRejectButton();
     } else {
-      // After 100 attempts, show a cute message and allow clicking
-      alert("Wow! You're really determined! 💪 But that YES button is still there, just saying... 💖")
-      setResponse('no')
+      // Eventually let them click it if they are really persistent, but show alert
+      if (!window.confirm("Are you absolutely, 100%, positively sure? 🥺")) {
+        e.preventDefault();
+      } else {
+        setResponse('no');
+        alert("Okay... I'll keep trying! 💔");
+      }
     }
   }
 
   const handleAccept = () => {
     setResponse('yes')
     setShowCelebration(true)
+    // Trigger confetti or fireworks here if not handled by render
   }
 
   const getRejectMessage = () => {
-    if (rejectAttempts >= 100) {
-      // After 100 attempts, show final messages
-      const finalIndex = Math.min(Math.floor((rejectAttempts - 100) / 10), finalMessages.length - 1)
-      return finalMessages[finalIndex]
-    } else {
-      // Show random message from the array
-      const messageIndex = (rejectAttempts - 1) % rejectMessages.length
-      return rejectMessages[messageIndex]
+    if (rejectAttempts >= 20) {
+      return finalMessages[Math.floor(Math.random() * finalMessages.length)]
     }
+    return rejectMessages[rejectAttempts % rejectMessages.length]
   }
 
   if (loading) {
     return (
       <div className="proposal-loading">
         <div className="loading-hearts">
-          <Heart className="heart-1" />
-          <Heart className="heart-2" />
-          <Heart className="heart-3" />
+          <Heart className="heart-1" fill="#ff4d88" />
+          <Heart className="heart-2" fill="#ff4d88" />
+          <Heart className="heart-3" fill="#ff4d88" />
         </div>
-        <p>Loading your magical proposal...</p>
-        {/* Debug info in loading state */}
-        {!import.meta.env.PROD && (
-          <div style={{ 
-            marginTop: '20px', 
-            padding: '10px', 
-            background: '#f0f0f0', 
-            borderRadius: '5px',
-            fontSize: '12px',
-            fontFamily: 'monospace'
-          }}>
-            <div>Token: {token}</div>
-            <div>Token Length: {token?.length}</div>
-            <div>Magic Link: {magicLink}</div>
-            <div>ID: {id}</div>
-          </div>
-        )}
+        <p>Loading your surprise... 🎁</p>
       </div>
     )
   }
 
   if (error) {
     return (
-      <div className="proposal-error">
-        <div className="error-content">
-          <h2>Oops! Something went wrong</h2>
-          <p>{error}</p>
-          
-          {/* Debug info in error state */}
-          {!import.meta.env.PROD && (
-            <div style={{ 
-              marginTop: '20px', 
-              padding: '15px', 
-              background: '#f8f9fa', 
-              borderRadius: '8px',
-              fontSize: '12px',
-              fontFamily: 'monospace',
-              textAlign: 'left',
-              border: '1px solid #dee2e6'
-            }}>
-              <strong>Debug Info:</strong><br/>
-              <div>URL: {window.location.href}</div>
-              <div>Token: {token || 'undefined'}</div>
-              <div>Token Length: {token?.length || 0}</div>
-              <div>Magic Link: {magicLink || 'undefined'}</div>
-              <div>ID: {id || 'undefined'}</div>
-              <div>Pathname: {location.pathname}</div>
-            </div>
-          )}
-          
-          <button 
-            className="btn btn-primary"
-            onClick={() => window.location.href = '/'}
-          >
-            Go Home
-          </button>
-        </div>
-      </div>
-    )
-  }
-
-  if (!proposalData) {
-    return (
-      <div className="proposal-loading">
-        <div className="loading-hearts">
-          <Heart className="heart-1" />
-          <Heart className="heart-2" />
-          <Heart className="heart-3" />
-        </div>
-        <p>Loading your magical proposal...</p>
+      <div className="proposal-error glass-card">
+        <X size={50} color="red" />
+        <h2>Ooops!</h2>
+        <p>{error}</p>
+        <button onClick={() => window.location.reload()} className="btn btn-primary">Try Again</button>
       </div>
     )
   }
@@ -370,189 +191,142 @@ const ProposalView = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
-            <div className="celebration-content">
+            <div className="celebration-content glass-card">
               <motion.div
-                className="celebration-text"
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ type: "spring", stiffness: 200 }}
               >
-                <h1>🎉 YES! 🎉</h1>
-                <p>You said YES! This is the beginning of something beautiful! 💕</p>
+                <h1>🎉 YAY! 🎉</h1>
+                <p>You made me the happiest person alive! <br /> I Love You! ❤️</p>
                 <div className="celebration-gif">
-                  <img 
-                    src="https://media.giphy.com/media/26u4cqiYI30juCOGY/giphy.gif" 
+                  <img
+                    src="https://media.giphy.com/media/26u4cqiYI30juCOGY/giphy.gif"
                     alt="Celebration"
+                    style={{ borderRadius: '15px', maxWidth: '100%' }}
                   />
                 </div>
               </motion.div>
             </div>
-            <div className="confetti">
+            {/* Simple confetti particles */}
+            <div className="confetti-container">
               {[...Array(50)].map((_, i) => (
-                <div key={i} className={`confetti-piece confetti-${i % 5}`}></div>
+                <span key={i} className="confetti-particle" style={{
+                  left: `${Math.random() * 100}%`,
+                  animationDelay: `${Math.random() * 2}s`,
+                  backgroundColor: ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff'][Math.floor(Math.random() * 5)]
+                }}></span>
               ))}
             </div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {!showCelebration && (
-        <motion.div 
+      {!showCelebration && proposalData && (
+        <motion.div
           className="proposal-container"
           ref={pageRef}
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <div className="proposal-card">
+          <div className="proposal-card glass-card">
             <div className="proposal-header">
-              <motion.div 
+              <div className="stamp">
+                <Heart size={30} fill="white" />
+              </div>
+              <motion.div
                 className="hearts-decoration"
-                animate={{ rotate: 360 }}
-                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                animate={{ rotate: [0, 10, -10, 0] }}
+                transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
               >
-                💕💖💗💘💝
+                💌
               </motion.div>
-              <h1>A Special Message for You</h1>
+              <h1>Special Delivery!</h1>
             </div>
 
             <div className="proposal-content">
               {proposalData.image_url && (
-                <motion.div 
-                  className="proposal-image"
+                <motion.div
+                  className="proposal-image-container"
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
-                  transition={{ delay: 0.3, type: "spring", stiffness: 200 }}
+                  transition={{ delay: 0.3, type: "spring" }}
                 >
-                  <img src={proposalData.image_url} alt="Special moment" />
-                  <div className="image-hearts">
-                    <span>💖</span>
-                    <span>💕</span>
-                    <span>💗</span>
-                  </div>
+                  <img src={proposalData.image_url} alt="Us" className="proposal-image" />
+                  <div className="image-frame"></div>
                 </motion.div>
               )}
 
-              <motion.div 
-                className="proposal-message"
+              <motion.div
+                className="proposal-text-content"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ delay: 0.6, duration: 0.8 }}
+                transition={{ delay: 0.5 }}
               >
-                <p>From: <strong>{proposalData.from_name}</strong></p>
-                <p>To: <strong>{proposalData.to_name}</strong></p>
-                <div className="message-text">
-                  {proposalData.message}
+                <div className="letter-body">
+                  <p className="greeting">Dearest <strong>{proposalData.to_name}</strong>,</p>
+                  <p className="message-text">{proposalData.message}</p>
+                  <p className="signature">With love,<br /><strong>{proposalData.from_name}</strong></p>
                 </div>
               </motion.div>
 
-              <motion.div 
-                className="proposal-question"
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 1, type: "spring", stiffness: 150 }}
+              <motion.div
+                className="big-question"
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ delay: 0.8, type: 'spring' }}
               >
-                <h2>💖 Will {proposalData.to_name}, be my Valentine? 💖</h2>
+                Will you be my Valentine? 🌹
               </motion.div>
 
-              <motion.div 
-                className="proposal-actions"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1.3, duration: 0.6 }}
-              >
+              <div className="action-buttons">
                 <motion.button
-                  className="accept-btn"
+                  className="btn btn-primary accept-btn"
                   onClick={handleAccept}
                   whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.95 }}
-                  animate={{ 
-                    boxShadow: [
-                      "0 0 20px rgba(255, 107, 157, 0.5)",
-                      "0 0 40px rgba(255, 107, 157, 0.8)",
-                      "0 0 20px rgba(255, 107, 157, 0.5)"
-                    ]
-                  }}
-                  transition={{ 
-                    boxShadow: { duration: 2, repeat: Infinity }
-                  }}
-                >
-                  <Heart size={24} />
-                  YES! 💕
-                </motion.button>
-
-                <motion.button
-                  ref={rejectButtonRef}
-                  className={`reject-btn ${rejectAttempts > 0 ? 'floating-reject' : ''}`}
-                  onClick={handleRejectClick}
-                  onMouseEnter={handleRejectHover}
-                  onFocus={handleRejectHover}
+                  whileTap={{ scale: 0.9 }}
                   animate={{
-                    x: rejectAttempts > 0 ? 0 : 0,
-                    y: rejectAttempts > 0 ? 0 : 0
+                    scale: [1, 1.1, 1],
+                    boxShadow: ["0 0 0px var(--primary-pink)", "0 0 20px var(--primary-pink)", "0 0 0px var(--primary-pink)"]
                   }}
-                  transition={{
-                    type: "spring",
-                    stiffness: 500,
-                    damping: 30,
-                    duration: 0.3
-                  }}
-                  whileHover={rejectAttempts < 10000 ? {} : { scale: 1.05 }}
-                  style={{
-                    position: rejectAttempts > 0 ? 'fixed' : 'static',
-                    left: rejectAttempts > 0 ? `${rejectButtonPosition.x}px` : 'auto',
-                    top: rejectAttempts > 0 ? `${rejectButtonPosition.y}px` : 'auto',
-                    zIndex: rejectAttempts > 0 ? 9999 : 'auto',
-                    cursor: 'pointer'
-                  }}
+                  transition={{ repeat: Infinity, duration: 1.5 }}
                 >
-                  <X size={20} />
-                  {rejectAttempts >= 100 ? 'Fine, No!' : 'No'}
+                  <Heart fill="white" size={24} style={{ marginRight: '8px' }} /> YES! Absolutely!
                 </motion.button>
-              </motion.div>
 
-              {rejectAttempts > 0 && (
-                <motion.div 
-                  className="reject-message"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                >
-                  <p>
-                    {getRejectMessage()}
+                <div style={{ position: 'relative', display: 'inline-block' }}>
+                  <motion.button
+                    ref={rejectButtonRef}
+                    className="btn btn-secondary reject-btn"
+                    onClick={handleRejectInteraction}
+                    onMouseEnter={handleRejectHover}
+                    onTouchStart={handleRejectInteraction} // For mobile
+                    animate={{
+                      x: rejectButtonPosition.x,
+                      y: rejectButtonPosition.y,
+                      rotate: rejectAttempts * 10
+                    }}
+                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                    style={{ position: 'relative' }} // Changed from absolute to relative initially to sit in flow, then transform moves it
+                  >
+                    {rejectAttempts > 10 ? <X size={20} /> : null}
+                    {rejectAttempts > 10 ? "" : "No"}
+                  </motion.button>
+                  {rejectAttempts > 0 && (
+                    <motion.div
+                      className="reject-popup"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: -40 }}
+                      key={rejectAttempts} // Re-render on new attempt
+                    >
+                      {getRejectMessage()}
+                    </motion.div>
+                  )}
+                </div>
+              </div>
 
-
-                    {rejectAttempts === 4 && "It's trying to escape! Maybe give love a chance? �"}
-                    {rejectAttempts >= 5 && "Okay, you can click it now... but that YES button is still glowing! ✨"}
-                  </p>
-                </motion.div>
-              )}
             </div>
-          </div>
-
-          <div className="floating-hearts">
-            {[...Array(15)].map((_, i) => (
-              <motion.div
-                key={i}
-                className="floating-heart"
-                animate={{
-                  y: [-20, -100],
-                  opacity: [1, 0],
-                  rotate: [0, 180]
-                }}
-                transition={{
-                  duration: 3,
-                  repeat: Infinity,
-                  delay: i * 0.2,
-                  ease: "easeOut"
-                }}
-                style={{
-                  left: `${Math.random() * 100}%`,
-                  fontSize: `${Math.random() * 20 + 15}px`
-                }}
-              >
-                {['💕', '💖', '💗', '💘', '💝'][i % 5]}
-              </motion.div>
-            ))}
           </div>
         </motion.div>
       )}

@@ -1,446 +1,271 @@
 .proposal-view {
   min-height: 100vh;
-  position: relative;
-  overflow: hidden;
-  background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
-}
-
-.proposal-loading {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  min-height: 100vh;
-  color: var(--text-dark);
+  align-items: center;
+  padding: 20px;
+  overflow: hidden;
+  position: relative;
 }
-
-.loading-hearts {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
-}
-
-.loading-hearts svg {
-  color: var(--primary-pink);
-  animation: pulse 1s ease-in-out infinite;
-}
-
-.heart-1 { animation-delay: 0s; }
-.heart-2 { animation-delay: 0.3s; }
-.heart-3 { animation-delay: 0.6s; }
 
 .proposal-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  padding: 20px;
+  width: 100%;
+  max-width: 600px;
   position: relative;
   z-index: 2;
 }
 
 .proposal-card {
-  background: white;
-  border-radius: 30px;
-  padding: 40px;
-  max-width: 600px;
-  width: 100%;
-  box-shadow: 0 20px 60px rgba(255, 107, 157, 0.3);
-  text-align: center;
+  /* Inherits .glass-card styles from index.css globally mostly, but we define specifics here */
   position: relative;
-  overflow: hidden;
-}
-
-.proposal-card::before {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: linear-gradient(45deg, transparent, rgba(255, 107, 157, 0.1), transparent);
-  animation: shimmer 3s ease-in-out infinite;
-}
-
-@keyframes shimmer {
-  0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-  100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+  /* overflow: hidden;  <-- REMOVED to allow button to run slightly outside if needed without disappearing */
+  border-radius: 24px;
+  /* Premium letter look */
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 240, 245, 0.98));
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(255, 255, 255, 0.8);
 }
 
 .proposal-header {
+  text-align: center;
   margin-bottom: 30px;
+  position: relative;
+  border-bottom: 2px dashed rgba(255, 77, 136, 0.2);
+  padding-bottom: 20px;
+}
+
+.stamp {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  transform: rotate(15deg);
+  width: 60px;
+  height: 60px;
+  background: var(--deep-red);
+  border-radius: 50%;
+  border: 4px double white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .hearts-decoration {
   font-size: 2rem;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   display: inline-block;
 }
 
-.proposal-header h1 {
-  font-size: 2.2rem;
-  color: var(--text-dark);
-  margin: 0;
-  font-weight: 700;
+.proposal-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.proposal-image-container {
+  width: 100%;
+  max-height: 450px;
+  /* Slightly taller to accommodate */
+  overflow: hidden;
+  border-radius: 15px;
+  position: relative;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  transform: rotate(-2deg);
+  border: 8px solid white;
+  /* Thicker frame */
+  background: white;
+  /* White background for the 'frame' feel */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .proposal-image {
-  position: relative;
-  margin-bottom: 30px;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  /* Shows full image */
+  background: #f8f8f8;
+  /* Soft background for padding areas */
+  border-radius: 8px;
 }
 
-.proposal-image img {
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 5px solid var(--primary-pink);
-  box-shadow: 0 10px 30px rgba(255, 107, 157, 0.3);
-}
-
-.image-hearts {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  pointer-events: none;
-}
-
-.image-hearts span {
-  font-size: 1.5rem;
-  animation: float 2s ease-in-out infinite;
-}
-
-.image-hearts span:nth-child(1) { animation-delay: 0s; }
-.image-hearts span:nth-child(2) { animation-delay: 0.7s; }
-.image-hearts span:nth-child(3) { animation-delay: 1.4s; }
-
-.proposal-message {
-  margin-bottom: 30px;
-}
-
-.proposal-message p {
-  color: var(--text-dark);
-  font-size: 1.1rem;
-  margin-bottom: 15px;
+.letter-body {
+  font-family: 'Great Vibes', cursive;
+  font-size: 1.6rem;
+  /* Slightly larger for readability */
+  color: #1a1a1a;
+  /* Much darker grey/black */
+  background: rgba(255, 255, 255, 0.7);
+  /* More opaque */
+  padding: 25px;
+  border-radius: 15px;
+  line-height: 1.6;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: inset 0 0 20px rgba(255, 240, 245, 0.5);
 }
 
 .message-text {
-  background: var(--light-pink);
-  padding: 20px;
-  border-radius: 15px;
-  font-size: 1.1rem;
-  line-height: 1.6;
-  color: var(--text-dark);
-  font-style: italic;
-  position: relative;
+  margin: 15px 0;
+  font-size: 2rem;
+  color: #c2185b;
+  /* Darker, richer red/pink */
+  font-weight: 500;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.8);
 }
 
-.message-text::before {
-  content: '"';
-  font-size: 3rem;
+.big-question {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 800;
   color: var(--primary-pink);
-  position: absolute;
-  top: -10px;
-  left: 10px;
+  margin: 20px 0;
+  text-shadow: 2px 2px 0 rgba(255, 255, 255, 1);
 }
 
-.message-text::after {
-  content: '"';
-  font-size: 3rem;
-  color: var(--primary-pink);
-  position: absolute;
-  bottom: -20px;
-  right: 10px;
-}
-
-.proposal-question {
-  margin-bottom: 40px;
-}
-
-.proposal-question h2 {
-  font-size: 1.8rem;
-  color: var(--text-dark);
-  margin: 0;
-  animation: pulse 2s ease-in-out infinite;
-}
-
-.proposal-actions {
+.action-buttons {
   display: flex;
-  gap: 20px;
   justify-content: center;
+  /* Center them */
+  gap: 30px;
+  /* Strong separation */
   align-items: center;
+  margin-top: 30px;
+  min-height: 100px;
+  flex-wrap: wrap;
+  /* Safety for small screens */
 }
 
 .accept-btn {
-  background: var(--gradient);
-  color: white;
-  border: none;
-  padding: 15px 30px;
-  border-radius: 50px;
-  font-size: 1.2rem;
-  font-weight: 600;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  transition: all 0.3s ease;
+  background: linear-gradient(45deg, #f377b5, #cac3c4) !important;
+  /* Lighter, brighter pink gradient */
+  color: #3a3333 !important;
+  /* Pure white text */
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  border: 2px solid white !important;
+  box-shadow: 0 0 15px #ff6b95;
+  /* Matching glow */
+  animation: glowing 1.5s infinite alternate;
+  font-weight: 900 !important;
+  font-size: 1.2rem !important;
+  z-index: 5;
+}
+
+@keyframes glowing {
+  0% {
+    box-shadow: 0 0 10px #ff6b95, 0 0 20px #ff6b95;
+    transform: scale(1);
+  }
+
+  100% {
+    box-shadow: 0 0 20px #ff6b95, 0 0 30px #ff6b95, 0 0 40px #ff6b95;
+    transform: scale(1.05);
+  }
 }
 
 .reject-btn {
-  background: #f8f9fa;
-  color: #666;
-  border: 2px solid #ddd;
-  padding: 12px 25px;
-  border-radius: 50px;
-  font-size: 1rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  transition: all 0.3s ease;
+  position: relative;
+  background: white !important;
+  color: #c62828 !important;
+  /* Strong red text */
+  border: 2px solid #ef9a9a !important;
+  font-weight: 700 !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  min-width: 100px;
 }
 
 .reject-btn:hover {
-  background: #e9ecef;
-  border-color: #adb5bd;
+  background: #ffebee !important;
+  transform: scale(1.05);
 }
 
-.reject-message {
-  margin-top: 20px;
-  padding: 15px;
-  background: rgba(255, 107, 157, 0.1);
-  border-radius: 10px;
-  color: var(--text-dark);
-  font-style: italic;
-}
-
-.floating-hearts {
+.reject-popup {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  top: -50px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  padding: 8px 12px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  white-space: nowrap;
+  font-size: 0.9rem;
   pointer-events: none;
-  z-index: 1;
+  z-index: 20;
 }
 
-.floating-heart {
+.reject-popup::after {
+  content: '';
   position: absolute;
-  pointer-events: none;
+  bottom: -6px;
+  left: 50%;
+  margin-left: -6px;
+  border-width: 6px 6px 0;
+  border-style: solid;
+  border-color: white transparent transparent transparent;
 }
 
+
+/* Celebration */
 .celebration-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(255, 107, 157, 0.95);
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 100;
   display: flex;
-  align-items: center;
   justify-content: center;
-  z-index: 1000;
+  align-items: center;
+  overflow: hidden;
 }
 
 .celebration-content {
   text-align: center;
+  max-width: 90%;
   color: white;
-  position: relative;
-  z-index: 1001;
+  background: rgba(255, 255, 255, 0.1) !important;
 }
 
-.celebration-text h1 {
+.celebration-content h1 {
   font-size: 4rem;
-  margin-bottom: 20px;
-  animation: bounce 1s ease-in-out infinite;
+  color: #fff;
+  text-shadow: 0 0 20px #ff4d88;
 }
 
-.celebration-text p {
+.celebration-content p {
   font-size: 1.5rem;
-  margin-bottom: 30px;
+  color: #fff;
+  margin-bottom: 20px;
 }
 
-.celebration-gif img {
-  width: 300px;
-  height: 200px;
-  border-radius: 15px;
-  object-fit: cover;
-}
-
-@keyframes bounce {
-  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-  40% { transform: translateY(-20px); }
-  60% { transform: translateY(-10px); }
-}
-
-.confetti {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-}
-
-.confetti-piece {
+.confetti-particle {
   position: absolute;
   width: 10px;
   height: 10px;
-  animation: confetti-fall 3s linear infinite;
+  top: -10px;
+  border-radius: 50%;
+  animation: fall linear forwards;
 }
 
-.confetti-0 { background: #ff6b9d; left: 10%; animation-delay: 0s; }
-.confetti-1 { background: #ffc0cb; left: 30%; animation-delay: 0.5s; }
-.confetti-2 { background: #ff1493; left: 50%; animation-delay: 1s; }
-.confetti-3 { background: #ff69b4; left: 70%; animation-delay: 1.5s; }
-.confetti-4 { background: #ff20b2; left: 90%; animation-delay: 2s; }
-
-@keyframes confetti-fall {
-  0% {
-    transform: translateY(-100vh) rotate(0deg);
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(100vh) rotate(360deg);
-    opacity: 0;
+@keyframes fall {
+  to {
+    transform: translateY(100vh) rotate(720deg);
   }
 }
 
+/* Mobile */
 @media (max-width: 768px) {
   .proposal-card {
-    padding: 25px;
-    margin: 10px;
+    margin: 0;
+    padding: 15px;
   }
-  
-  .proposal-header h1 {
-    font-size: 1.8rem;
-  }
-  
-  .proposal-question h2 {
+
+  .big-question {
     font-size: 1.5rem;
   }
-  
-  .proposal-actions {
-    flex-direction: column;
-    gap: 15px;
+
+  .letter-body {
+    font-size: 1.2rem;
   }
-  
-  .accept-btn,
-  .reject-btn {
-    width: 100%;
-    justify-content: center;
-  }
-  
-  .celebration-text h1 {
-    font-size: 3rem;
-  }
-  
-  .celebration-gif img {
-    width: 250px;
-    height: 150px;
-  }
-}
-/* Floating Reject Button Styles */
-.proposal-actions {
-  position: relative;
-  min-height: 120px;
-  display: flex;
-  gap: 20px;
-  justify-content: center;
-  align-items: flex-start;
-}
-
-.floating-reject {
-  z-index: 9999 !important;
-  transition: all 0.3s ease;
-  position: fixed !important;
-}
-
-.floating-reject:hover {
-  background: #e9ecef !important;
-  border-color: #adb5bd !important;
-  cursor: pointer;
-}
-
-/* Ensure the container has enough space for the floating button */
-.proposal-card {
-  position: relative;
-  min-height: 700px;
-  overflow: visible;
-}
-
-.reject-btn {
-  user-select: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  white-space: nowrap;
-}
-
-/* When button is floating, it should be above everything */
-.reject-btn.floating-reject {
-  position: fixed !important;
-  z-index: 9999 !important;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-  border: 2px solid #ddd;
-  background: white;
-}
-
-/* Additional spacing for mobile */
-@media (max-width: 768px) {
-  .proposal-actions {
-    min-height: 150px;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .proposal-card {
-    min-height: 600px;
-    overflow: visible;
-  }
-  
-  .floating-reject {
-    position: fixed !important;
-    z-index: 9999 !important;
-  }
-}
-.proposal-error {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
-}
-
-.error-content {
-  background: white;
-  padding: 40px;
-  border-radius: 20px;
-  text-align: center;
-  box-shadow: 0 20px 60px rgba(255, 107, 157, 0.3);
-  max-width: 400px;
-  width: 90%;
-}
-
-.error-content h2 {
-  color: var(--text-dark);
-  margin-bottom: 15px;
-  font-size: 1.8rem;
-}
-
-.error-content p {
-  color: #666;
-  margin-bottom: 25px;
-  font-size: 1.1rem;
-}
-
-.error-content .btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
 }
