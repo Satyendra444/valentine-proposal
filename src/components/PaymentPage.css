@@ -409,8 +409,9 @@
 }
 
 .copy-btn {
-  background: var(--gradient);
-  color: white;
+  background: white;
+  color: var(--primary-pink);
+  border: 2px solid var(--primary-pink);
 }
 
 .share-btn {
@@ -419,13 +420,11 @@
   border: 2px solid var(--primary-pink);
 }
 
-.copy-btn:hover {
-  box-shadow: 0 5px 15px rgba(255, 107, 157, 0.3);
-}
-
+.copy-btn:hover,
 .share-btn:hover {
   background: var(--primary-pink);
   color: white;
+  box-shadow: 0 5px 15px rgba(255, 107, 157, 0.3);
 }
 
 .modal-instructions {

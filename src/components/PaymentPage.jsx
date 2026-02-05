@@ -280,7 +280,7 @@ const PaymentPage = () => {
               </div>
               <div className="link-actions-large">
                 <motion.button
-                  className="btn btn-primary copy-btn-large"
+                  className="btn btn-secondary copy-btn-large"
                   onClick={copyToClipboard}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
